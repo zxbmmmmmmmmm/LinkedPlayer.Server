@@ -1,7 +1,7 @@
 ﻿using LinkedPlayer.Server.Models;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using LinkedPlayer.Server.Data;
+using LinkedPlayer.Common.Data;
 
 namespace LinkedPlayer.Server.Services;
 public class RoomService

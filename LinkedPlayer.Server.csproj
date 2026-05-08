@@ -11,5 +11,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LinkedPlayer.Common\LinkedPlayer.Common.csproj" />
+  </ItemGroup>
   
 </Project>

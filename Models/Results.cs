@@ -1,4 +1,4 @@
-﻿using LinkedPlayer.Server.Data;
+﻿using LinkedPlayer.Common.Data;
 
 namespace LinkedPlayer.Server.Models;
 

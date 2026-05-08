@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
-using LinkedPlayer.Server.Data;
+using LinkedPlayer.Common;
 
 namespace LinkedPlayer.Server.Services;
 
 [RequiresDynamicCode("")]
-public class SyncHub : Hub<ISyncClient>
+public class SyncHub : Hub<ISyncClient> , ISyncHub
 {
     public RoomService _roomService;
+
     public SyncHub(RoomService roomService)
     {
         _roomService = roomService;
@@ -46,11 +47,3 @@ public class SyncHub : Hub<ISyncClient>
     }
 }
 
-public interface ISyncClient
-{
-    Task ResourceUpdated(Dictionary<string,object> updatedValues);
-
-    Task MemberJoined(MemberJoinedEvent data);
-
-    Task MemberLeft(MemberLeftEvent data);
-}

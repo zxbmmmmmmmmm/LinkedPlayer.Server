@@ -1,6 +1,6 @@
-using LinkedPlayer.Server.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Text.Json.Serialization;
+using LinkedPlayer.Common.Data;
 using LinkedPlayer.Server.Services;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -13,6 +13,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<RoomService>();
 
 var app = builder.Build();
 
