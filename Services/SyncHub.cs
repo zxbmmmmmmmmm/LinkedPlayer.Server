@@ -48,7 +48,9 @@ public class SyncHub : Hub<ISyncClient>
 
 public interface ISyncClient
 {
-    Task<string> ResourceUpdated(Dictionary<string,object> updatedValues);
-    Task<string> MemberJoined(MemberJoinedEvent data);
-    Task<string> MemberLeft(MemberLeftEvent data);
+    Task ResourceUpdated(Dictionary<string,object> updatedValues);
+
+    Task MemberJoined(MemberJoinedEvent data);
+
+    Task MemberLeft(MemberLeftEvent data);
 }
