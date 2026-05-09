@@ -41,7 +41,12 @@ public class RoomService
             throw new ArgumentException($"Member with id {memberId} not found");
         var roomId = member.RoomId;
         _members.Remove(memberId);
-        _rooms[roomId].Members.Remove(memberId);
+        var room = _rooms[roomId];
+        room.Members.Remove(memberId);
+        if(room.Members.Count == 0)
+        {
+            _rooms.Remove(roomId);
+        }
         return new MemberLeftResult(member.RoomId,new MemberLeftEvent(member.Name));
     }
 
