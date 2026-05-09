@@ -36,7 +36,7 @@ public class SyncHub : Hub<ISyncClient> , ISyncHub
     {
         var connectionId = Context.ConnectionId;
         var result = _roomService.CreateRoom(name, Context.ConnectionId, username, resource);
-        await Groups.AddToGroupAsync(connectionId, name);
+        await Groups.AddToGroupAsync(connectionId, result.RoomId);
         return result.RoomId;
     }
 

@@ -30,6 +30,7 @@ public class RoomService
             throw new ArgumentException($"Room with id {roomId} not found");
         var user = new RoomMember(connectionId, username, roomId);
         room.Members[user.ConnectionId] = user;
+        _members[user.ConnectionId] = user;
         return new MemberJoinedResult(new MemberJoinedEvent(username));
     }
 
