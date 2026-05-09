@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="samples/LinkedPlayer.Client.Avalonia/LinkedPlayer.Client.Avalonia.csproj" Id="1cc78e6c-b38a-4e41-95b0-a46fd5019d00" />
+  </Folder>
+  <Project Path="src/LinkedPlayer.Common/LinkedPlayer.Common.csproj" Id="74cfea74-174b-4cdd-92f3-2e4efb4ddcd9" />
+  <Project Path="src/LinkedPlayer.Server/LinkedPlayer.Server.csproj" />
+</Solution>
