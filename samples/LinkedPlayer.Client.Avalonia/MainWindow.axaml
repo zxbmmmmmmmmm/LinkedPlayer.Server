@@ -10,17 +10,16 @@
     d:DesignWidth="800"
     x:DataType="vm:SyncViewModel"
     mc:Ignorable="d">
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="Username" />
-            <TextBox Text="{Binding Username, Mode=TwoWay}" />
-            <StackPanel Orientation="Horizontal">
-                <TextBox Text="{Binding RoomId, Mode=TwoWay}" />
+    <Grid Margin="12">
+        <StackPanel Spacing="12">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBox PlaceholderText="Username" Text="{Binding Username, Mode=TwoWay}" />
+                <TextBox PlaceholderText="Room Id" Text="{Binding RoomId, Mode=TwoWay}" />
                 <Button Command="{Binding JoinRoomCommand}" Content="Join" />
                 <Button Command="{Binding CreateRoomCommand}" Content="Create" />
             </StackPanel>
-            <TextBlock Text="Message" />
-            <TextBox Text="{Binding Message, Mode=TwoWay}" />
+            <TextBox PlaceholderText="Message" Text="{Binding Message, Mode=TwoWay}" />
+            <ListBox ItemsSource="{Binding Log}" />
         </StackPanel>
     </Grid>
 </Window>

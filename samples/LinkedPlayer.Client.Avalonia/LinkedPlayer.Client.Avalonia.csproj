@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LinkedPlayer.Common\LinkedPlayer.Common.csproj" />
+    <ProjectReference Include="..\..\src\LinkedPlayer.Common\LinkedPlayer.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

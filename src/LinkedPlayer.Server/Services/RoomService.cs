@@ -31,7 +31,7 @@ public class RoomService
         var user = new RoomMember(connectionId, username, roomId);
         room.Members[user.ConnectionId] = user;
         _members[user.ConnectionId] = user;
-        return new MemberJoinedResult(new MemberJoinedEvent(username));
+        return new MemberJoinedResult(new ResourceSnapshot(room.Resource, room.ResourceUpdatedAt), new MemberJoinedEvent(username));
     }
 
     public MemberLeftResult LeaveRoom(string memberId)

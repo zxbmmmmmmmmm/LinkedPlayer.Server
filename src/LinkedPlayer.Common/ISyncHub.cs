@@ -1,10 +1,11 @@
-﻿using System.Text.RegularExpressions;
+﻿using LinkedPlayer.Common.Data;
+using System.Text.RegularExpressions;
 
 namespace LinkedPlayer.Common;
 
 public interface ISyncHub
 {
-    Task JoinRoom(string roomId, string userName);
+    Task<ResourceSnapshot> JoinRoom(string roomId, string userName);
 
     Task LeaveRoom();
 

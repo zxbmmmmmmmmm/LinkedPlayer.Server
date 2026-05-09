@@ -7,6 +7,7 @@ public record MemberLeftResult(
     MemberLeftEvent Event);
 
 public record MemberJoinedResult(
+    ResourceSnapshot ResourceSnapshot,
     MemberJoinedEvent Event);
 
 public record CreateRoomResult(

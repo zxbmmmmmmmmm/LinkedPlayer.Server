@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Claims;
 using LinkedPlayer.Common;
+using LinkedPlayer.Common.Data;
 
 namespace LinkedPlayer.Server.Services;
 
@@ -16,12 +17,13 @@ public class SyncHub : Hub<ISyncClient> , ISyncHub
         _roomService = roomService;
     }
 
-    public async Task JoinRoom(string roomId, string userName)
+    public async Task<ResourceSnapshot> JoinRoom(string roomId, string userName)
     {
         var connectionId = Context.ConnectionId;
         var result = _roomService.JoinRoom(roomId, connectionId, userName);
         await Groups.AddToGroupAsync(connectionId, roomId);
         await Clients.OthersInGroup(roomId).MemberJoined(result.Event);
+        return result.ResourceSnapshot;
     }
 
     public async Task LeaveRoom()

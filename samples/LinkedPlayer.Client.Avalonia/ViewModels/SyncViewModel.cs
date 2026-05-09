@@ -5,8 +5,11 @@ using LinkedPlayer.Common.Data;
 using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TypedSignalR.Client;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LinkedPlayer.Client.Avalonia.ViewModels;
 
@@ -23,6 +26,8 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
 
     [ObservableProperty]
     public partial string RoomId { get; set; } = "";
+
+    public ObservableCollection<string> Log { get; set; } = [];
 
     [RelayCommand]
     public async Task Connect()
@@ -50,21 +55,26 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
     {
         await Connect();
         if (_hubProxy is null) return;
-        await _hubProxy.JoinRoom(RoomId,Username);
+        var resource = await _hubProxy.JoinRoom(RoomId,Username);
+        Message = resource.Data.GetValueOrDefault(nameof(Message))?.ToString() ?? "";
     }
 
     public Task MemberJoined(MemberJoinedEvent data)
     {
+        Log.Add($"{DateTimeOffset.Now}: {data.DisplayName} Joined");
         return Task.CompletedTask;
     }
 
     public Task MemberLeft(MemberLeftEvent data)
     {
+        Log.Add($"{DateTimeOffset.Now}: {data.DisplayName} Left");
         return Task.CompletedTask;
     }
 
     public Task ResourceUpdated(Dictionary<string, object> updatedValues)
     {
+        Log.Add($"{DateTimeOffset.Now}: ResourceUpdated: {JsonSerializer.Serialize(updatedValues)}");
+
         _syncing = true;
         foreach (var kvp in updatedValues) 
         { 
@@ -76,9 +86,6 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
         _syncing = false;
         return Task.CompletedTask;
     }
-
-
-
     partial void OnMessageChanged(string value)
     {
         if (_syncing)
