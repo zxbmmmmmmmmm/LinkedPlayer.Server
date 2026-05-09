@@ -10,17 +10,20 @@ public class RoomService
 
     private readonly Dictionary<string, RoomMember> _members = [];
 
+    private readonly RoomIdGenerator _idGenerator = new();
+
     public CreateRoomResult CreateRoom(
         string name,
         string connectionId,
         string username, 
         Dictionary<string, object> resource)
     {
-        var creator = new RoomMember(connectionId, username, _rooms.Count.ToString());
-        var room = new Room(_rooms.Count.ToString(), name, creator, resource);
-        _rooms[room.Id] = room;
+        var id = _idGenerator.Next().ToString();
+        var creator = new RoomMember(connectionId, username, id);
+        var room = new Room(id, name, creator, resource);
+        _rooms[id] = room;
         _members[creator.ConnectionId] = creator;
-        return new CreateRoomResult(room.Id);
+        return new CreateRoomResult(id);
     }
 
     public MemberJoinedResult JoinRoom(string roomId, string connectionId, string username)
@@ -70,5 +73,21 @@ public class RoomService
             updatedValues[item.Key] = value;
         }
         return new UpdateResourceResult(member.RoomId, updatedValues);
+    }
+
+    private class RoomIdGenerator
+    {
+        private const int m = 900000;
+        private const int a = 301;
+        private const int c = 1;
+        private int _count = 0;
+        private int _current = (int)Random.Shared.NextInt64(m - 1);
+
+        public int Next()
+        {
+            _current = (a * _current + c) % m;
+            _count++;
+            return _current;
+        }
     }
 }

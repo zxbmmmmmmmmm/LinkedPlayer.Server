@@ -84,7 +84,7 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
 
     public Task ResourceUpdated(Dictionary<string, object> updatedValues)
     {
-        Log.Add($"{DateTimeOffset.Now}: ResourceUpdated: {JsonSerializer.Serialize(updatedValues)}");
+        Log.Insert(0, $"{DateTimeOffset.Now}: ResourceUpdated: {JsonSerializer.Serialize(updatedValues)}");
 
         _syncing = true;
         foreach (var kvp in updatedValues) 

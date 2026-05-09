@@ -33,6 +33,14 @@ public class SyncHub : Hub<ISyncClient> , ISyncHub
     public async Task<ResourceSnapshot> JoinRoom(string roomId, string userName)
     {
         var connectionId = Context.ConnectionId;
+        try
+        {
+            await LeaveRoom();
+        }
+        catch
+        {
+            // ignore
+        }
         var result = _roomService.JoinRoom(roomId, connectionId, userName);
         await Groups.AddToGroupAsync(connectionId, roomId);
         await Clients.OthersInGroup(roomId).MemberJoined(result.Event);
@@ -49,6 +57,14 @@ public class SyncHub : Hub<ISyncClient> , ISyncHub
 
     public async Task<string> CreateRoom(string name, string username, Dictionary<string, object> resource)
     {
+        try
+        {
+            await LeaveRoom();
+        }
+        catch
+        {
+            // ignore
+        }
         var connectionId = Context.ConnectionId;
         var result = _roomService.CreateRoom(name, Context.ConnectionId, username, resource);
         await Groups.AddToGroupAsync(connectionId, result.RoomId);

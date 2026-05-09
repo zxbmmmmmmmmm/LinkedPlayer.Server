@@ -24,11 +24,24 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.MapGet("/rooms", () => {
+
+});
+
 app.Run();
 
 
 [JsonSerializable(typeof(MemberJoinedEvent))]
 [JsonSerializable(typeof(MemberLeftEvent))]
+[JsonSerializable(typeof(TimeSpan))]
+[JsonSerializable(typeof(DateTimeOffset))]
+[JsonSerializable(typeof(DateTime))]
+[JsonSerializable(typeof(DateOnly))]
+[JsonSerializable(typeof(TimeOnly))]
+[JsonSerializable(typeof(bool))]
+[JsonSerializable(typeof(int))]
+[JsonSerializable(typeof(long))]
+[JsonSerializable(typeof(string))]
 [JsonSerializable(typeof(Dictionary<string, object>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
