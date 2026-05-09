@@ -22,6 +22,15 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
     public partial string Message { get; set; } = "";
 
     [ObservableProperty]
+    public partial TimeSpan Position { get; set; }
+
+    [ObservableProperty]
+    public partial bool IsPlaying { get; set; }
+
+    [ObservableProperty]
+    public partial double PlaybackRate { get; set; } = 1.0;
+
+    [ObservableProperty]
     public partial string Username { get; set; } = "";
 
     [ObservableProperty]
@@ -56,7 +65,9 @@ public partial class SyncViewModel : ObservableObject, ISyncClient
         await Connect();
         if (_hubProxy is null) return;
         var resource = await _hubProxy.JoinRoom(RoomId,Username);
+        _syncing = true;
         Message = resource.Data.GetValueOrDefault(nameof(Message))?.ToString() ?? "";
+        _syncing = false;
     }
 
     public Task MemberJoined(MemberJoinedEvent data)

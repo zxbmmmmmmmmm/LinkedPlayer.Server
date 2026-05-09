@@ -17,6 +17,19 @@ public class SyncHub : Hub<ISyncClient> , ISyncHub
         _roomService = roomService;
     }
 
+    public override async Task OnDisconnectedAsync(Exception? exception)
+    {
+        try
+        {
+            await LeaveRoom();
+        }
+        catch
+        {
+            // ignore
+        }
+        await base.OnDisconnectedAsync(exception);
+    }
+
     public async Task<ResourceSnapshot> JoinRoom(string roomId, string userName)
     {
         var connectionId = Context.ConnectionId;
